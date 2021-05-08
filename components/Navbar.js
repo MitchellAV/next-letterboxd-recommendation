@@ -1,14 +1,24 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Navbar = () => {
 	const router = useRouter();
 	let username = "";
-	console.log(router);
-	if (router.route.includes("user")) {
+	if (router.route.includes("user") && router.isReady) {
 		const { slug } = router.query;
 		username = slug;
 	}
+	const [search, setSearch] = useState("");
+
+	const handleChange = (e) => {
+		setSearch(e.target.value);
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		router.push(`/user/${search}`);
+		setSearch("");
+	};
 	return (
 		<nav>
 			<ul id="menu">
@@ -18,9 +28,6 @@ const Navbar = () => {
 							<img
 								src="/logos/letterboxd-logo.svg"
 								alt="Letterboxd Logo"
-								// width={200}
-								// height={100}
-								// layout={"intrinsic"}
 							></img>
 						</a>
 					</Link>
@@ -69,12 +76,15 @@ const Navbar = () => {
 					</>
 				)}
 				<li className="searchbar">
-					<form id="nav_searchbar">
+					<form id="nav_searchbar" onSubmit={handleSubmit}>
 						<input
 							type="text"
 							autoComplete="off"
 							placeholder="Search Username"
-							name="username"
+							id="search"
+							name="search"
+							value={search}
+							onChange={handleChange}
 						/>
 						<button type="submit">
 							<i className="fa fa-search" />

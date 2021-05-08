@@ -1,29 +1,9 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import MovieDetails from "../../components/recommendations/MovieDetails";
 import MovieFilter from "../../components/MovieFilter";
-
-import axios from "axios";
+import useFetchMovies from "../../hooks/useFetchMovies";
 
 const Movie = () => {
-	const router = useRouter();
-	const [movies, setMovies] = useState([]);
-	useEffect(async () => {
-		if (router.isReady) {
-			try {
-				const { slug, ...filter } = router.query;
-				console.log(filter);
-				const uri = "http://localhost:5000/movie/" + slug;
-				const params = { params: filter };
-				const res = await axios.get(uri, params);
-				const data = res.data;
-				console.log(data);
-				setMovies(data.movies);
-			} catch (err) {
-				console.error(err);
-			}
-		}
-	}, [router]);
+	const movies = useFetchMovies("movie");
 	return (
 		<>
 			<MovieFilter />
