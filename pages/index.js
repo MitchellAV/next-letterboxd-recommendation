@@ -1,10 +1,12 @@
 import Head from "next/head";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import axios from "axios";
 import Status from "../components/Status";
 
 export default function Home() {
+	const router = useRouter();
 	const [username, setUsername] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [userMovieStatus, setUserMovieStatus] = useState("waiting");
@@ -15,6 +17,8 @@ export default function Home() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
+		setUserMovieStatus("waiting");
+		setUserRecStatus("waiting");
 		try {
 			setUserMovieStatus("working");
 			const res = await axios.post(
@@ -49,6 +53,9 @@ export default function Home() {
 			console.log(err);
 			return;
 		}
+		setTimeout(() => {
+			router.push(`/user/${username}`);
+		}, 3000);
 	};
 	return (
 		<>
@@ -90,7 +97,7 @@ export default function Home() {
 				</fieldset>
 			</form>
 			{isLoading && (
-				<section>
+				<section className="status-container">
 					<Status
 						state={userMovieStatus}
 						statusText={
@@ -103,6 +110,13 @@ export default function Home() {
 							"Creating your personal movie recommendations"
 						}
 					/>
+					{userMovieStatus === "success" &&
+						userRecStatus === "success" && (
+							<h2>
+								Recommendations are ready... Taking you there
+								now
+							</h2>
+						)}
 				</section>
 			)}
 		</>
