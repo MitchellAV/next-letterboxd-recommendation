@@ -1,6 +1,55 @@
 import Head from "next/head";
+import { useState } from "react";
+
+import axios from "axios";
+import Status from "../components/Status";
 
 export default function Home() {
+	const [username, setUsername] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [userMovieStatus, setUserMovieStatus] = useState("waiting");
+	const [userRecStatus, setUserRecStatus] = useState("waiting");
+	const handleChange = (e) => {
+		setUsername(e.target.value);
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setIsLoading(true);
+		try {
+			setUserMovieStatus("working");
+			const res = await axios.post(
+				"http://localhost:8080/api/user/movies",
+				{
+					username
+				}
+			);
+			const data = res.data;
+			if (data.status === 200) {
+				setUserMovieStatus("success");
+			}
+		} catch (err) {
+			setUserMovieStatus("failed");
+			console.log(err);
+			return;
+		}
+		try {
+			setUserRecStatus("working");
+			const res = await axios.post(
+				"http://localhost:8080/api/user/recommend",
+				{
+					username
+				}
+			);
+			const data = res.data;
+			if (data.status === 200) {
+				setUserRecStatus("success");
+			}
+		} catch (err) {
+			setUserRecStatus("failed");
+			console.log(err);
+			return;
+		}
+	};
 	return (
 		<>
 			<Head>
@@ -8,11 +57,7 @@ export default function Home() {
 			</Head>
 
 			<h1>Welcome to the Home Page</h1>
-			<form
-				id="create_user"
-				action="http://localhost:8080/api/update"
-				method="POST"
-			>
+			<form id="create_user" onSubmit={handleSubmit}>
 				<fieldset className="form-items">
 					<div className="form-group">
 						<label htmlFor="username">
@@ -23,24 +68,43 @@ export default function Home() {
 							type="text"
 							autoComplete="off"
 							placeholder="Letterboxd Username"
+							id="username"
 							name="username"
+							value={username}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="form-group">
 						<label htmlFor="accuracy">
 							How long do you want to wait?
 						</label>
-						<select name="accuracy">
+						{/* <select name="accuracy">
 							<option value="low">I need it right now</option>
 							<option value="med">Take your time</option>
 							<option value="high">I have all day</option>
-						</select>
+						</select> */}
 					</div>
 					<button className="filter-btn" type="submit">
 						Get Recommendations
 					</button>
 				</fieldset>
 			</form>
+			{isLoading && (
+				<section>
+					<Status
+						state={userMovieStatus}
+						statusText={
+							"Getting your watched movies from Letterboxd"
+						}
+					/>
+					<Status
+						state={userRecStatus}
+						statusText={
+							"Creating your personal movie recommendations"
+						}
+					/>
+				</section>
+			)}
 		</>
 	);
 }

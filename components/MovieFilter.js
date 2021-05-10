@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { format_url, format_query } from "../util/route-functions";
 
-const MovieFilter = ({ queryParams, setQueryParams }) => {
+const MovieFilter = () => {
 	const router = useRouter();
 	// const {
 	// 	min_vote_average,
@@ -103,8 +103,8 @@ const MovieFilter = ({ queryParams, setQueryParams }) => {
 	};
 	return (
 		<form id="filter_search" onSubmit={handleSubmit}>
-			<h4>Filter Results</h4>
 			<fieldset className="form-items">
+				<h4>Filter</h4>
 				<div className="form-group">
 					<label htmlFor="filter">Tag</label>
 					<input
