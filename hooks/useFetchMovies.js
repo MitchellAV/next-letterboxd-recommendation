@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-const useFetchMovies = (location) => {
+const useFetchMovies = (location, setIsLoading) => {
 	const router = useRouter();
-	const [movies, setMovies] = useState([]);
+	const [response, setResponse] = useState({
+		movies: [],
+		page: 1,
+		maxPage: 1
+	});
 	useEffect(async () => {
+		setIsLoading(true);
 		if (router.isReady) {
 			try {
 				const { slug, ...filter } = router.query;
@@ -29,13 +34,14 @@ const useFetchMovies = (location) => {
 				const res = await axios.get(URI, params);
 				const data = res.data;
 				console.log(data);
-				setMovies(data.movies);
+				setResponse(data);
+				setIsLoading(false);
 			} catch (err) {
 				console.error(err);
 			}
 		}
 	}, [router]);
-	return movies;
+	return response;
 };
 
 export default useFetchMovies;

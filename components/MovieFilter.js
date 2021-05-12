@@ -15,8 +15,8 @@ const MovieFilter = () => {
 	// } = filterParams;
 	const defaultFormState = {
 		filter: { value: "", valid: true },
-		min_vote_count: { value: 100, valid: true },
-		min_vote_average: { value: 5, valid: true },
+		min_vote_count: { value: 1000, valid: true },
+		min_vote_average: { value: 6, valid: true },
 		min_runtime: { value: 40, valid: true },
 		num_per_page: { value: 25, valid: true },
 		sort_type: { value: "score.score", valid: true },
@@ -129,9 +129,12 @@ const MovieFilter = () => {
 						<option value="vote_average">Rating</option>
 						<option value="vote_count"># of Votes</option>
 						<option value="release_date">Release Date</option>
-						{/* <% if (personal) { %>
-						<option value="score.userRating">User Rating</option>
-						<% } %> */}
+						{router.route.includes("personal") &&
+							router.isReady && (
+								<option value="score.userRating">
+									User Rating
+								</option>
+							)}
 					</select>
 				</div>
 				<div className="form-group">

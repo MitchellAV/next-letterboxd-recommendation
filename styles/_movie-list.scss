@@ -1,14 +1,22 @@
 .movie-list {
 	display: flex;
-	flex-direction: column;
 	@media only screen and (min-width: 992px) {
 		& {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: space-between;
 		}
 	}
 }
 .movie-container {
+	flex: 0 32%;
+	width: 100%;
+	min-height: 100%;
+
+	// display: flex;
+	// flex-direction: row;
+	// justify-content: flex-start;
 	margin: 0.5rem;
 	padding: 1.5rem;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
@@ -20,14 +28,16 @@
 
 .movie-thumb {
 	object-fit: contain;
-	max-width: 30%;
+	max-height: 40vh;
+	max-width: 100%;
 	float: left;
 	margin: 1rem;
 }
 
 .movie-info {
-	display: flex;
-	flex-direction: column;
+	display: block;
+	width: 100%;
+	// flex-direction: column;
 }
 
 .movie-tag {

@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
+import { useState } from "react";
 import Link from "next/link";
-import { format_url } from "../../util/route-functions";
 
-const MovieDetials = ({ movie }) => {
+const MovieDetials = ({ movie, url }) => {
+	const [isClicked, setIsClicked] = useState(false);
 	const {
 		_id,
 		title,
@@ -20,18 +20,23 @@ const MovieDetials = ({ movie }) => {
 		userRating,
 		letterboxd_url
 	} = movie;
-	const router = useRouter();
-	const url = format_url(router.asPath);
-	return (
-		<article className="movie-container">
-			<h2 className="movie-title">{title}</h2>
 
-			<img
-				src={`http://localhost:5000/thumbnails/${_id}-thumb.jpg`}
-				className="movie-thumb"
-				loading="lazy"
-				alt={_id}
-			/>
+	return (
+		<article
+			className="movie-container"
+			onClick={() => setIsClicked(!isClicked)}
+		>
+			<div>
+				<h2 className="movie-title">{title}</h2>
+
+				<img
+					src={`http://localhost:5000/thumbnails/${_id}-thumb.jpg`}
+					className="movie-thumb"
+					loading="lazy"
+					alt={_id}
+				/>
+			</div>
+
 			<div className="movie-info">
 				{letterboxd_url && (
 					<p>
@@ -96,80 +101,84 @@ const MovieDetials = ({ movie }) => {
 					<b>Summary:</b>
 					{overview}
 				</p>
-				{crew.length !== 0 && (
+				{isClicked && (
 					<>
-						<p>
-							<b>Crew:</b>
-						</p>
-						<div className="movie-tag-list">
-							{crew.map((tag, i) => (
-								<Link
-									key={i}
-									href={`${url}?filter=${encodeURIComponent(
-										tag
-									)}`}
-								>
-									<a className="movie-tag">{tag}</a>
-								</Link>
-							))}
-						</div>
-					</>
-				)}
-				{cast.length !== 0 && (
-					<>
-						<p>
-							<b>Cast:</b>
-						</p>
-						<div className="movie-tag-list">
-							{cast.map((tag, i) => (
-								<Link
-									key={i}
-									href={`${url}?filter=${encodeURIComponent(
-										tag
-									)}`}
-								>
-									<a className="movie-tag">{tag}</a>
-								</Link>
-							))}
-						</div>
-					</>
-				)}
-				{keywords.length !== 0 && (
-					<>
-						<p>
-							<b>Keywords:</b>
-						</p>
-						<div className="movie-tag-list">
-							{keywords.map((tag, i) => (
-								<Link
-									key={i}
-									href={`${url}?filter=${encodeURIComponent(
-										tag
-									)}`}
-								>
-									<a className="movie-tag">{tag}</a>
-								</Link>
-							))}
-						</div>
-					</>
-				)}
-				{genres.length !== 0 && (
-					<>
-						<p>
-							<b>Genres:</b>
-						</p>
-						<div className="movie-tag-list">
-							{genres.map((tag, i) => (
-								<Link
-									key={i}
-									href={`${url}?filter=${encodeURIComponent(
-										tag
-									)}`}
-								>
-									<a className="movie-tag">{tag}</a>
-								</Link>
-							))}
-						</div>
+						{crew.length !== 0 && (
+							<>
+								<p>
+									<b>Crew:</b>
+								</p>
+								<div className="movie-tag-list">
+									{crew.map((tag, i) => (
+										<Link
+											key={i}
+											href={`${url}?filter=${encodeURIComponent(
+												tag
+											)}`}
+										>
+											<a className="movie-tag">{tag}</a>
+										</Link>
+									))}
+								</div>
+							</>
+						)}
+						{cast.length !== 0 && (
+							<>
+								<p>
+									<b>Cast:</b>
+								</p>
+								<div className="movie-tag-list">
+									{cast.map((tag, i) => (
+										<Link
+											key={i}
+											href={`${url}?filter=${encodeURIComponent(
+												tag
+											)}`}
+										>
+											<a className="movie-tag">{tag}</a>
+										</Link>
+									))}
+								</div>
+							</>
+						)}
+						{keywords.length !== 0 && (
+							<>
+								<p>
+									<b>Keywords:</b>
+								</p>
+								<div className="movie-tag-list">
+									{keywords.map((tag, i) => (
+										<Link
+											key={i}
+											href={`${url}?filter=${encodeURIComponent(
+												tag
+											)}`}
+										>
+											<a className="movie-tag">{tag}</a>
+										</Link>
+									))}
+								</div>
+							</>
+						)}
+						{genres.length !== 0 && (
+							<>
+								<p>
+									<b>Genres:</b>
+								</p>
+								<div className="movie-tag-list">
+									{genres.map((tag, i) => (
+										<Link
+											key={i}
+											href={`${url}?filter=${encodeURIComponent(
+												tag
+											)}`}
+										>
+											<a className="movie-tag">{tag}</a>
+										</Link>
+									))}
+								</div>
+							</>
+						)}
 					</>
 				)}
 			</div>

@@ -1,4 +1,5 @@
-const Pages = ({ currentPage, maxPage }) => {
+import Link from "next/link";
+const Pages = ({ currentPage, maxPage, url }) => {
 	const pageList = [];
 	const ahead = 5;
 	const start = currentPage - ahead;
@@ -8,21 +9,25 @@ const Pages = ({ currentPage, maxPage }) => {
 			pageList.push(i);
 		}
 	}
+	console.log(url);
 	return (
 		<>
 			{pageList.map((page) => (
-				<a
-					href=""
-					className={currentPage === page ? "page current" : "page"}
-				>
-					{page}
-				</a>
+				<Link href={`${url}?page=${encodeURIComponent(page)}`}>
+					<a
+						className={
+							currentPage === page ? "page current" : "page"
+						}
+					>
+						{page}
+					</a>
+				</Link>
 			))}
 		</>
 	);
 };
 
-const Pagination = ({ currentPage, maxPage }) => {
+const Pagination = ({ currentPage, maxPage, url }) => {
 	return (
 		<>
 			{maxPage > 1 && (
@@ -39,7 +44,11 @@ const Pagination = ({ currentPage, maxPage }) => {
 						</>
 					)}
 
-					<Pages currentPage={currentPage} maxPage={maxPage} />
+					<Pages
+						currentPage={currentPage}
+						maxPage={maxPage}
+						url={url}
+					/>
 					{currentPage !== maxPage && (
 						<>
 							<a href="" className="next">

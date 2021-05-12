@@ -30,6 +30,8 @@ export default function Home() {
 			const data = res.data;
 			if (data.status === 200) {
 				setUserMovieStatus("success");
+			} else {
+				setUserMovieStatus("failed");
 			}
 		} catch (err) {
 			setUserMovieStatus("failed");
@@ -47,6 +49,8 @@ export default function Home() {
 			const data = res.data;
 			if (data.status === 200) {
 				setUserRecStatus("success");
+			} else {
+				setUserMovieStatus("failed");
 			}
 		} catch (err) {
 			setUserRecStatus("failed");

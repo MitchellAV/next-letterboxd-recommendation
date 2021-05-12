@@ -46,6 +46,21 @@ p {
 	float: left;
 }
 
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	height: 50vh;
+}
+
 @import "navbar";
 @import "movie-list";
 @import "pagination";
