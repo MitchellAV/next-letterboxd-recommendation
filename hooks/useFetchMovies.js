@@ -19,16 +19,16 @@ const useFetchMovies = (location, setIsLoading) => {
 				switch (location) {
 					case "user":
 						URI =
-							"http://api.letterboxd-recommendation.com/user/" +
+							"https://api.letterboxd-recommendation.com/user/" +
 							slug;
 						break;
 					case "movie":
 						URI =
-							"http://api.letterboxd-recommendation.com/movie/" +
+							"https://api.letterboxd-recommendation.com/movie/" +
 							slug;
 						break;
 					case "personal":
-						URI = `http://api.letterboxd-recommendation.com/user/${slug}/personal`;
+						URI = `https://api.letterboxd-recommendation.com/user/${slug}/personal`;
 						break;
 
 					default:

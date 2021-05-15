@@ -22,7 +22,7 @@ export default function Home() {
 		try {
 			setUserMovieStatus("working");
 			const res = await axios.post(
-				"http://api.letterboxd-recommendation.com/recommend/user/movies",
+				"https://api.letterboxd-recommendation.com/recommend/user/movies",
 				{
 					username
 				}
@@ -41,7 +41,7 @@ export default function Home() {
 		try {
 			setUserRecStatus("working");
 			const res = await axios.post(
-				"http://api.letterboxd-recommendation.com/recommend/user/recommend",
+				"https://api.letterboxd-recommendation.com/recommend/user/recommend",
 				{
 					username
 				}
