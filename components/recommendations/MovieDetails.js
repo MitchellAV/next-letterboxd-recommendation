@@ -30,7 +30,7 @@ const MovieDetials = ({ movie, url }) => {
 				<h2 className="movie-title">{title}</h2>
 
 				<img
-					src={`https://api.letterboxd-recommendation.com/thumbnails/${_id}-thumb.jpg`}
+					src={`${process.env.NEXT_PUBLIC_API_ENDPOINT}/thumbnails/${_id}-thumb.jpg`}
 					className="movie-thumb"
 					loading="lazy"
 					alt={_id}

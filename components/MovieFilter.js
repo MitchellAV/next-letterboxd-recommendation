@@ -16,10 +16,10 @@ const MovieFilter = () => {
 	const defaultFormState = {
 		filter: { value: "", valid: true },
 		min_vote_count: { value: 1000, valid: true },
-		min_vote_average: { value: 6, valid: true },
+		min_vote_average: { value: 7, valid: true },
 		min_runtime: { value: 40, valid: true },
-		num_per_page: { value: 25, valid: true },
-		sort_type: { value: "score.score", valid: true },
+		num_per_page: { value: 30, valid: true },
+		sort_type: { value: "recommended", valid: true },
 		order: { value: -1, valid: true }
 	};
 	const [formState, setFormState] = useState(defaultFormState);
@@ -30,12 +30,12 @@ const MovieFilter = () => {
 		const value = formEl.value;
 		let valid = false;
 		switch (name) {
-			// case "min_vote_average":
+			// case "min_vote_count":
 			// 	formEl.setCustomValidity("");
-			// 	if (value >= 3) valid = true;
+			// 	if (value >= 1) valid = true;
 			// 	valid
 			// 		? formEl.setCustomValidity("")
-			// 		: formEl.setCustomValidity("Please enter in your name");
+			// 		: formEl.setCustomValidity("Must have atleast 1 vote");
 			// 	break;
 
 			default:
@@ -54,15 +54,15 @@ const MovieFilter = () => {
 		const url = format_url(router.asPath);
 		const query = format_query(formState);
 
-		router.push({ pathname: url, query });
-
 		// let validForm =
 		// 	formState.name.valid &&
 		// 	formState.email.valid &&
 		// 	formState.subject.valid &&
 		// 	formState.message.valid;
 
-		// if (e.target.checkValidity() && validForm) {
+		if (e.target.checkValidity()) {
+			router.push({ pathname: url, query });
+		}
 		// 	try {
 		// 		let form_data = {
 		// 			name: formState.name.value,
@@ -124,16 +124,14 @@ const MovieFilter = () => {
 						value={formState.sort_type.value}
 						onChange={handleChange}
 					>
-						<option value="score.score">Recommended</option>
+						<option value="recommended">Recommended</option>
 						<option value="runtime">Runtime</option>
-						<option value="vote_average">Rating</option>
-						<option value="vote_count"># of Votes</option>
+						<option value="movie_rating">Rating</option>
+						<option value="votes"># of Votes</option>
 						<option value="release_date">Release Date</option>
 						{router.route.includes("personal") &&
 							router.isReady && (
-								<option value="score.userRating">
-									User Rating
-								</option>
+								<option value="user_rating">User Rating</option>
 							)}
 					</select>
 				</div>
@@ -145,7 +143,7 @@ const MovieFilter = () => {
 						name="min_vote_average"
 						autoComplete="off"
 						step={0.5}
-						placeholder={defaultFormState.min_vote_average.value}
+						placeholder={"0.5 to 10"}
 						min={0.5}
 						max={10}
 						value={formState.min_vote_average.value}
@@ -159,7 +157,7 @@ const MovieFilter = () => {
 						id="min_vote_count"
 						name="min_vote_count"
 						autoComplete="off"
-						placeholder={defaultFormState.min_vote_count.value}
+						// placeholder={"defaultFormState.min_vote_count.value"}
 						min={1}
 						value={formState.min_vote_count.value}
 						onChange={handleChange}
@@ -172,7 +170,7 @@ const MovieFilter = () => {
 						id="min_runtime"
 						name="min_runtime"
 						autoComplete="off"
-						placeholder={defaultFormState.min_runtime.value}
+						placeholder={"In Minutes"}
 						min={1}
 						value={formState.min_runtime.value}
 						onChange={handleChange}
@@ -196,10 +194,10 @@ const MovieFilter = () => {
 						value={formState.num_per_page.value}
 						onChange={handleChange}
 					>
-						<option value={25}>25</option>
-						<option value={50}>50</option>
-						<option value={75}>75</option>
-						<option value={100}>100</option>
+						<option value={30}>30</option>
+						<option value={60}>60</option>
+						<option value={90}>90</option>
+						<option value={120}>120</option>
 					</select>
 				</div>
 				<button className=" filter-btn" type="submit">

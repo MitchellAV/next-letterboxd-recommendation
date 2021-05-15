@@ -18,23 +18,19 @@ const useFetchMovies = (location, setIsLoading) => {
 				let URI = "";
 				switch (location) {
 					case "user":
-						URI =
-							"https://api.letterboxd-recommendation.com/user/" +
-							slug;
+						URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${slug}`;
 						break;
 					case "movie":
-						URI =
-							"https://api.letterboxd-recommendation.com/movie/" +
-							slug;
+						URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movie/${slug}`;
 						break;
 					case "personal":
-						URI = `https://api.letterboxd-recommendation.com/user/${slug}/personal`;
+						URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${slug}/personal`;
 						break;
 
 					default:
 						break;
 				}
-				const params = { params: filter };
+				const params = { params: filter, timeout: 1000 * 60 * 5 };
 				const res = await axios.get(URI, params);
 				const data = res.data;
 				console.log(data);

@@ -22,10 +22,11 @@ export default function Home() {
 		try {
 			setUserMovieStatus("working");
 			const res = await axios.post(
-				"https://api.letterboxd-recommendation.com/recommend/user/movies",
+				`${process.env.NEXT_PUBLIC_REC_API_ENDPOINT}/user/movies`,
 				{
 					username
-				}
+				},
+				{ timeout: 1000 * 60 * 5 }
 			);
 			const data = res.data;
 			if (data.status === 200) {
@@ -41,10 +42,11 @@ export default function Home() {
 		try {
 			setUserRecStatus("working");
 			const res = await axios.post(
-				"https://api.letterboxd-recommendation.com/recommend/user/recommend",
+				`${process.env.NEXT_PUBLIC_REC_API_ENDPOINT}/user/recommend`,
 				{
 					username
-				}
+				},
+				{ timeout: 1000 * 60 * 5 }
 			);
 			const data = res.data;
 			if (data.status === 200) {
