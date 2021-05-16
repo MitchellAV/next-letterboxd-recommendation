@@ -16,6 +16,7 @@ const MovieDetials = ({ movie, url }) => {
 		original_title,
 		cast,
 		imdb_id,
+		runtime,
 		maxTag,
 		userRating,
 		letterboxd_url
@@ -38,6 +39,12 @@ const MovieDetials = ({ movie, url }) => {
 			</div>
 
 			<div className="movie-info">
+				<p>
+					<Link href={`/movie/${_id}`}>
+						<a className="movie-tag">Recommend Similar Movies</a>
+					</Link>
+				</p>
+
 				{letterboxd_url && (
 					<p>
 						<a
@@ -46,6 +53,17 @@ const MovieDetials = ({ movie, url }) => {
 							href={`https://letterboxd.com${letterboxd_url}`}
 						>
 							View on Letterboxd
+						</a>
+					</p>
+				)}
+				{imdb_id && (
+					<p>
+						<a
+							className="movie-tag"
+							target="_blank"
+							href={`https://www.imdb.com/title/${imdb_id}`}
+						>
+							View on IMDb
 						</a>
 					</p>
 				)}
@@ -61,52 +79,41 @@ const MovieDetials = ({ movie, url }) => {
 				)}
 				{userRating && (
 					<p>
-						<b>User Rating:</b>
+						<b>User Rating: </b>
 						{userRating}
 					</p>
 				)}
 				<p>
-					<b>ID:</b>
-					<Link href={`/movie/${_id}`}>
-						<a className="movie-tag">{_id}</a>
-					</Link>
-				</p>
-				<p>
-					<b>Original Title:</b>
+					<b>Original Title: </b>
 					{original_title}
 				</p>
 				<p>
-					<b>IMDB:</b>
-					<a
-						className="movie-tag"
-						target="_blank"
-						href={`https://www.imdb.com/title/${imdb_id}`}
-					>
-						{imdb_id}
-					</a>
+					<b>Runtime: </b>
+					{runtime} mins.
 				</p>
+
 				<p>
-					<b>Avg. Rating:</b>
+					<b>Avg. Rating: </b>
 					{vote_average}
 				</p>
 				<p>
-					<b># of Ratings:</b>
+					<b># of Ratings: </b>
 					{vote_count}
 				</p>
 				<p>
-					<b>Release Date:</b>
+					<b>Release Date: </b>
 					{release_date}
 				</p>
 				<p>
-					<b>Summary:</b>
+					<b>Summary: </b>
 					{overview}
 				</p>
-				{isClicked && (
+				{isClicked ? (
 					<>
 						{crew.length !== 0 && (
 							<>
 								<p>
-									<b>Crew:</b>
+									<b>Crew: </b>
 								</p>
 								<div className="movie-tag-list">
 									{crew.map((tag, i) => (
@@ -125,7 +132,7 @@ const MovieDetials = ({ movie, url }) => {
 						{cast.length !== 0 && (
 							<>
 								<p>
-									<b>Cast:</b>
+									<b>Cast: </b>
 								</p>
 								<div className="movie-tag-list">
 									{cast.map((tag, i) => (
@@ -144,7 +151,7 @@ const MovieDetials = ({ movie, url }) => {
 						{keywords.length !== 0 && (
 							<>
 								<p>
-									<b>Keywords:</b>
+									<b>Keywords: </b>
 								</p>
 								<div className="movie-tag-list">
 									{keywords.map((tag, i) => (
@@ -163,7 +170,7 @@ const MovieDetials = ({ movie, url }) => {
 						{genres.length !== 0 && (
 							<>
 								<p>
-									<b>Genres:</b>
+									<b>Genres: </b>
 								</p>
 								<div className="movie-tag-list">
 									{genres.map((tag, i) => (
@@ -180,6 +187,8 @@ const MovieDetials = ({ movie, url }) => {
 							</>
 						)}
 					</>
+				) : (
+					<h4 className="info-button btn">Click for more info</h4>
 				)}
 			</div>
 		</article>

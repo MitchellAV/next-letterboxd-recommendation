@@ -60,6 +60,13 @@ p {
 	width: 100%;
 	height: 50vh;
 }
+.info-button {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	min-height: 100%;
+}
 
 @import "navbar";
 @import "movie-list";
