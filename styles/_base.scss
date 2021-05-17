@@ -1,0 +1,62 @@
+* {
+	box-sizing: border-box;
+	color: $text-color;
+	margin: 0;
+	padding: 0;
+}
+html {
+	background-color: $background-color;
+	font-size: 16px;
+	// @include responsive(HD) {
+	// 	font-size: 18px;
+	// }
+	@include responsive(FHD) {
+		font-size: 18px;
+	}
+	@include responsive(QHD) {
+		font-size: 22px;
+	}
+	@include responsive(UHD) {
+		font-size: 24px;
+	}
+}
+body {
+	width: 100%;
+}
+
+main {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-image: linear-gradient(#1f262d, #14181c);
+	padding: 1rem;
+	@include responsive(HD) {
+		padding: 1rem 5rem;
+	}
+}
+h1 {
+	font-size: ms($ms-base, 5);
+}
+h2 {
+	font-size: ms($ms-base, 4);
+}
+h3 {
+	font-size: ms($ms-base, 3);
+}
+h4 {
+	font-size: ms($ms-base, 2);
+}
+h5 {
+	font-size: ms($ms-base, 1);
+}
+h6 {
+	font-size: ms($ms-base, 0);
+}
+
+p {
+	width: minmax(75ch, 100%);
+	text-indent: 2rem;
+	@include responsive(HD) {
+		width: clamp(45ch, 100%, 75ch);
+	}
+}

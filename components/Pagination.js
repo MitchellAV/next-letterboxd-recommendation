@@ -1,9 +1,8 @@
 import Link from "next/link";
-
 import { useRouter } from "next/router";
-const Pages = ({ currentPage, maxPage, query, pathname }) => {
+import useWindowSize from "../hooks/useWindowSize";
+const Pages = ({ currentPage, maxPage, query, pathname, ahead }) => {
 	const pageList = [];
-	const ahead = 5;
 	const start = currentPage - ahead;
 	const end = currentPage + ahead;
 	for (let i = start; i <= end; i++) {
@@ -16,6 +15,7 @@ const Pages = ({ currentPage, maxPage, query, pathname }) => {
 		<>
 			{pageList.map((page) => (
 				<Link
+					key={page}
 					href={{
 						pathname,
 						query: { ...query, page }
@@ -36,26 +36,31 @@ const Pages = ({ currentPage, maxPage, query, pathname }) => {
 
 const Pagination = ({ currentPage, maxPage }) => {
 	const router = useRouter();
-
 	const pathname = router.pathname;
 	const query = router.query;
+
+	const [width, height] = useWindowSize();
+	const isMobile = width < 768 ? true : false;
+	const ahead = isMobile ? 2 : 5;
 	return (
 		<>
 			{maxPage > 1 && (
 				<section className="pagination">
+					{currentPage > ahead + 1 && (
+						<Link
+							href={{
+								pathname,
+								query: { ...query, page: 1 }
+							}}
+						>
+							<a className="first">
+								<i className="fa fa-chevron-left"></i>
+								<i className="fa fa-chevron-left"></i>
+							</a>
+						</Link>
+					)}
 					{currentPage !== 1 && (
 						<>
-							<Link
-								href={{
-									pathname,
-									query: { ...query, page: 1 }
-								}}
-							>
-								<a className="first">
-									<i className="fa fa-chevron-left"></i>
-									<i className="fa fa-chevron-left"></i>
-								</a>
-							</Link>
 							<Link
 								href={{
 									pathname,
@@ -74,30 +79,36 @@ const Pagination = ({ currentPage, maxPage }) => {
 						maxPage={maxPage}
 						pathname={pathname}
 						query={query}
+						ahead={ahead}
 					/>
 					{currentPage !== maxPage && (
 						<>
 							<Link
 								href={{
 									pathname,
-									query: { ...query, page: currentPage + 1 }
+									query: {
+										...query,
+										page: currentPage + 1
+									}
 								}}
 							>
 								<a className="next">
 									<i className="fa fa-chevron-right"></i>
 								</a>
 							</Link>
-							<Link
-								href={{
-									pathname,
-									query: { ...query, page: maxPage }
-								}}
-							>
-								<a className="last">
-									<i className="fa fa-chevron-right"></i>
-									<i className="fa fa-chevron-right"></i>
-								</a>
-							</Link>
+							{maxPage >= currentPage + ahead + 1 && (
+								<Link
+									href={{
+										pathname,
+										query: { ...query, page: maxPage }
+									}}
+								>
+									<a className="last">
+										<i className="fa fa-chevron-right"></i>
+										<i className="fa fa-chevron-right"></i>
+									</a>
+								</Link>
+							)}
 						</>
 					)}
 				</section>

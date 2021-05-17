@@ -42,35 +42,25 @@ const Navbar = () => {
 				{username && (
 					<>
 						<li className="nav-item">
-							<Link
-								className="nav-link"
-								href={`/user/${username}`}
-							>
-								{username}
+							<Link href={`/user/${username}`}>
+								<a className="nav-link">{username}</a>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link href={`/user/${username}/personal`}>
+								<a className="nav-link">Films</a>
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link
-								className="nav-link"
-								href={`/user/${username}/personal`}
-							>
-								<a>Films</a>
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link
-								className="nav-link"
 								href={`https://letterboxd.com/${username}/following/`}
 							>
-								<a>Friends</a>
+								<a className="nav-link">Friends</a>
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link
-								className="nav-link"
-								href={`https://letterboxd.com/${username}`}
-							>
-								<a>Account</a>
+							<Link href={`https://letterboxd.com/${username}`}>
+								<a className="nav-link">Account</a>
 							</Link>
 						</li>
 					</>

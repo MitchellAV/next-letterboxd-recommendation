@@ -1,7 +1,6 @@
 import MovieDetails from "../../components/recommendations/MovieDetails";
 import Pagination from "../../components/Pagination";
 
-import MovieFilter from "../../components/MovieFilter";
 import useFetchMovies from "../../hooks/useFetchMovies";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -9,13 +8,20 @@ import { format_url } from "../../util/route-functions";
 
 const Movie = () => {
 	const [isLoading, setIsLoading] = useState(true);
-	const { movies, page, numPages } = useFetchMovies("movie", setIsLoading);
+	const { movies, page, numPages, target_movie } = useFetchMovies(
+		"movie",
+		setIsLoading
+	);
 	const router = useRouter();
 	const url = format_url(router.asPath);
 
 	return (
 		<>
-			<MovieFilter />
+			{isLoading || (
+				<h1>
+					Movies similar to <em>{target_movie}</em>
+				</h1>
+			)}
 			<Pagination currentPage={page} maxPage={numPages} url={url} />
 			{isLoading ? (
 				<div className="loading">

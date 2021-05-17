@@ -22,18 +22,24 @@ const Personal = () => {
 					<h2>Loading Movies...</h2>
 				</div>
 			) : (
-				<section className="movie-list">
-					{movies.length !== 0 &&
-						movies.map((movie) => (
-							<MovieDetails
-								movie={movie}
-								key={movie._id}
-								url={url}
-							/>
-						))}
-				</section>
+				<>
+					<section className="movie-list">
+						{movies.length !== 0 &&
+							movies.map((movie) => (
+								<MovieDetails
+									movie={movie}
+									key={movie._id}
+									url={url}
+								/>
+							))}
+					</section>
+					<Pagination
+						currentPage={page}
+						maxPage={numPages}
+						url={url}
+					/>
+				</>
 			)}
-			<Pagination currentPage={page} maxPage={numPages} url={url} />
 		</>
 	);
 };
