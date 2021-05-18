@@ -22,13 +22,14 @@ const Navbar = () => {
 	return (
 		<nav>
 			<ul id="menu">
-				<li className="logo nav-item">
+				<li className="nav-logo-wrapper">
 					<Link href="/">
-						<a className="logo">
+						<a>
 							<img
+								className="nav-logo"
 								src="/logos/letterboxd-logo.svg"
 								alt="Letterboxd Logo"
-							></img>
+							/>
 						</a>
 					</Link>
 				</li>
@@ -65,8 +66,8 @@ const Navbar = () => {
 						</li>
 					</>
 				)}
-				<li className="searchbar">
-					<form id="nav_searchbar" onSubmit={handleSubmit}>
+				<li className="nav-item">
+					<form className="searchbar" onSubmit={handleSubmit}>
 						<input
 							type="text"
 							autoComplete="off"
@@ -77,7 +78,7 @@ const Navbar = () => {
 							onChange={handleChange}
 						/>
 						<button type="submit">
-							<i className="fa fa-search" />
+							<i className="fa fa-search nav-link" />
 						</button>
 					</form>
 				</li>

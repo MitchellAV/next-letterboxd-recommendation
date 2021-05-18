@@ -1,22 +1,18 @@
-@function pow($b, $e) {
-	// Return 1 if exponent is 0
-	@if $e == 0 {
-		@return 1;
-	}
+@function pow($base, $exponent) {
+	$value: 1;
 
-	// Seed the return.
-	$font-size: $b;
-
-	// Multiply or divide by the specified number of times.
-	@if $e > 0 {
-		@for $i from 1 to $e {
-			$font-size: $font-size * $b;
+	@if $exponent > 0 {
+		@for $i from 1 through $exponent {
+			$value: $value * $base;
+		}
+	} @else if $exponent < 0 {
+		@for $i from 1 through -$exponent {
+			$value: $value / $base;
 		}
 	}
-	@if $e < 0 {
-		@for $i from $e through 0 {
-			$font-size: $font-size / $b;
-		}
-	}
-	@return $font-size;
+
+	@return $value;
+}
+@function ms($exponent) {
+	@return pow($ms-ratio, $exponent) * 1rem;
 }

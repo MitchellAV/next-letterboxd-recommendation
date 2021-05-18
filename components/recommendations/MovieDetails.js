@@ -35,35 +35,37 @@ const MovieDetials = ({ movie, url }) => {
 					loading="lazy"
 					alt={_id}
 				/>
-				<div>
-					<div className="movie-links">
-						<Link href={`/movie/${_id}`}>
-							<a className="movie-tag">Similar Movies</a>
-						</Link>
+				<div className="movie-links">
+					<Link href={`/movie/${_id}`}>
+						<a className="movie-link">Similar Movies</a>
+					</Link>
 
-						{letterboxd_url && (
-							<a
-								className="movie-tag"
-								target="_blank"
-								href={`https://letterboxd.com${letterboxd_url}`}
-							>
-								View on Letterboxd
-							</a>
-						)}
-						{imdb_id && (
-							<a
-								className="movie-tag"
-								target="_blank"
-								href={`https://www.imdb.com/title/${imdb_id}`}
-							>
-								View on IMDb
-							</a>
-						)}
-					</div>
+					{letterboxd_url && (
+						<a
+							className="movie-link"
+							target="_blank"
+							href={`https://letterboxd.com${letterboxd_url}`}
+						>
+							View on Letterboxd
+						</a>
+					)}
+					{imdb_id && (
+						<a
+							className="movie-link"
+							target="_blank"
+							href={`https://www.imdb.com/title/${imdb_id}`}
+						>
+							View on IMDb
+						</a>
+					)}
+				</div>
+				<div className="movie-info-short">
 					{maxTag && (
 						<>
 							<div className="movie-info-group">
-								<h3>Recommended because of Tag: </h3>
+								<h5 className="movie-info-heading">
+									Recommended because of Tag:{" "}
+								</h5>
 								<Link
 									href={`${url}?filter=${encodeURIComponent(
 										maxTag
@@ -76,42 +78,45 @@ const MovieDetials = ({ movie, url }) => {
 					)}
 					{userRating && (
 						<div className="movie-info-group">
-							<h3>User Rating: </h3>
+							<h5 className="movie-info-heading">User Rating:</h5>
 							<p>{userRating.toFixed(1)}</p>
 						</div>
 					)}
 					<div className="movie-info-group">
-						<h3>Original Title: </h3>
+						<h5 className="movie-info-heading">Original Title:</h5>
 						<p>{original_title}</p>
 					</div>
 					<div className="movie-info-group">
-						<h3>Runtime: </h3>
+						<h5 className="movie-info-heading">Runtime:</h5>
 						<p>{runtime} mins.</p>
 					</div>
 
 					<div className="movie-info-group">
-						<h3>Avg. Rating: </h3>
+						<h5 className="movie-info-heading">Avg. Rating:</h5>
 						<p>{vote_average}</p>
 					</div>
 					<div className="movie-info-group">
-						<h3># of Ratings: </h3>
+						<h5 className="movie-info-heading"># of Votes:</h5>
 						<p>{vote_count}</p>
 					</div>
 					<div className="movie-info-group">
-						<h3>Release Date: </h3>
+						<h5 className="movie-info-heading">Release Date:</h5>
 						<p>{release_date}</p>
 					</div>
-					<div className="movie-info-group">
-						<h3>Summary: </h3>
-						<p>{overview}</p>
-					</div>
-					{isClicked && (
-						<>
-							{crew.length !== 0 && (
-								<>
-									<div className="movie-info-group">
-										<h3>Crew: </h3>
-									</div>
+				</div>
+				<div className="movie-info-group">
+					<h5 className="movie-info-heading">Summary:</h5>
+					<p>{overview}</p>
+				</div>
+				{isClicked && (
+					<>
+						{crew.length !== 0 && (
+							<>
+								<div className="movie-info-group">
+									<h5 className="movie-info-heading">
+										Crew:
+									</h5>
+
 									<div className="movie-tag-list">
 										{crew.map((tag, i) => (
 											<Link
@@ -126,13 +131,16 @@ const MovieDetials = ({ movie, url }) => {
 											</Link>
 										))}
 									</div>
-								</>
-							)}
-							{cast.length !== 0 && (
-								<>
-									<div className="movie-info-group">
-										<h3>Cast: </h3>
-									</div>
+								</div>
+							</>
+						)}
+						{cast.length !== 0 && (
+							<>
+								<div className="movie-info-group">
+									<h5 className="movie-info-heading">
+										Cast:
+									</h5>
+
 									<div className="movie-tag-list">
 										{cast.map((tag, i) => (
 											<Link
@@ -147,13 +155,16 @@ const MovieDetials = ({ movie, url }) => {
 											</Link>
 										))}
 									</div>
-								</>
-							)}
-							{keywords.length !== 0 && (
-								<>
-									<div className="movie-info-group">
-										<h3>Keywords: </h3>
-									</div>
+								</div>
+							</>
+						)}
+						{keywords.length !== 0 && (
+							<>
+								<div className="movie-info-group">
+									<h5 className="movie-info-heading">
+										Keywords:
+									</h5>
+
 									<div className="movie-tag-list">
 										{keywords.map((tag, i) => (
 											<Link
@@ -168,13 +179,16 @@ const MovieDetials = ({ movie, url }) => {
 											</Link>
 										))}
 									</div>
-								</>
-							)}
-							{genres.length !== 0 && (
-								<>
-									<div className="movie-info-group">
-										<h3>Genres: </h3>
-									</div>
+								</div>
+							</>
+						)}
+						{genres.length !== 0 && (
+							<>
+								<div className="movie-info-group">
+									<h5 className="movie-info-heading">
+										Genres:
+									</h5>
+
 									<div className="movie-tag-list">
 										{genres.map((tag, i) => (
 											<Link
@@ -189,14 +203,17 @@ const MovieDetials = ({ movie, url }) => {
 											</Link>
 										))}
 									</div>
-								</>
-							)}
-						</>
-					)}
-				</div>
+								</div>
+							</>
+						)}
+					</>
+				)}
 			</div>
-			{isClicked || (
-				<h3 className="info-button btn">Click for more info</h3>
+
+			{isClicked ? (
+				<h5 className="info-button btn">Click for less info</h5>
+			) : (
+				<h5 className="info-button btn">Click for more info</h5>
 			)}
 		</article>
 	);

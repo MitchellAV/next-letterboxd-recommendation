@@ -8,7 +8,7 @@
 
 	& > a {
 		text-decoration: none;
-		font-size: 1.4rem;
+		font-size: ms(2);
 	}
 }
 
@@ -23,6 +23,6 @@
 }
 
 .current {
-	background: lighten(#191e23, 20%);
+	background: lighten($link-color, 10%);
 	border-radius: 50%;
 }
