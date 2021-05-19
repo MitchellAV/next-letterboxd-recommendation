@@ -29,12 +29,18 @@ const MovieDetials = ({ movie, url }) => {
 		>
 			<h2 className="movie-title">{title}</h2>
 			<div className="movie-info">
-				<img
-					src={`${process.env.NEXT_PUBLIC_API_ENDPOINT}/thumbnails/${_id}-thumb.jpg`}
-					className="movie-thumb"
-					loading="lazy"
-					alt={_id}
-				/>
+				<a
+					className="movie-link"
+					target="_blank"
+					href={`https://letterboxd.com/tmdb/${_id}`}
+				>
+					<img
+						src={`${process.env.NEXT_PUBLIC_API_ENDPOINT}/thumbnails/${_id}-thumb.jpg`}
+						className="movie-thumb"
+						loading="lazy"
+						alt={title}
+					/>
+				</a>
 				<div className="movie-links">
 					<Link href={`/movie/${_id}`}>
 						<a className="movie-link">Similar Movies</a>
