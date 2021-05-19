@@ -62,9 +62,9 @@ h6 {
 	font-size: ms(0);
 }
 
-p {
-	// width: minmax(75ch, 100%);
-	@include responsive(HD) {
-		width: clamp(45ch, 100%, 75ch);
-	}
-}
+// p {
+// 	// width: minmax(75ch, 100%);
+// 	@include responsive(HD) {
+// 		width: clamp(45ch, 100%, 75ch);
+// 	}
+// }
