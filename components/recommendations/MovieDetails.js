@@ -59,55 +59,57 @@ const MovieDetials = ({ movie, url }) => {
 						</a>
 					)}
 				</div>
-				<div className="movie-info-short">
-					{maxTag && (
-						<>
-							<div className="movie-info-group">
-								<h5 className="movie-info-heading">
-									Recommended because of Tag:{" "}
-								</h5>
-								<Link
-									href={`${url}?filter=${encodeURIComponent(
-										maxTag
-									)}`}
-								>
-									<a className="movie-tag">{maxTag}</a>
-								</Link>
-							</div>
-						</>
-					)}
-					{userRating && (
+				{maxTag && (
+					<>
 						<div className="movie-info-group">
-							<h5 className="movie-info-heading">User Rating:</h5>
-							<p>{userRating.toFixed(1)}</p>
+							<h5 className="movie-info-heading">
+								Recommended because of Tag:{" "}
+							</h5>
+							<Link
+								href={`${url}?filter=${encodeURIComponent(
+									maxTag
+								)}`}
+							>
+								<a className="movie-tag">{maxTag}</a>
+							</Link>
 						</div>
-					)}
+					</>
+				)}
+				{original_title !== title && (
 					<div className="movie-info-group">
 						<h5 className="movie-info-heading">Original Title:</h5>
 						<p>{original_title}</p>
 					</div>
-					<div className="movie-info-group">
-						<h5 className="movie-info-heading">Runtime:</h5>
-						<p>{runtime} mins.</p>
-					</div>
+				)}
 
-					<div className="movie-info-group">
-						<h5 className="movie-info-heading">Avg. Rating:</h5>
-						<p>{vote_average}</p>
-					</div>
-					<div className="movie-info-group">
-						<h5 className="movie-info-heading"># of Votes:</h5>
-						<p>{vote_count}</p>
-					</div>
-					<div className="movie-info-group">
-						<h5 className="movie-info-heading">Release Date:</h5>
-						<p>{release_date}</p>
-					</div>
-				</div>
-				<div className="movie-info-group">
+				<div className="movie-info-summary">
 					<h5 className="movie-info-heading">Summary:</h5>
 					<p>{overview}</p>
 				</div>
+
+				{userRating && (
+					<div className="movie-info-group">
+						<h5 className="movie-info-heading">User Rating:</h5>
+						<p>{userRating.toFixed(1)}</p>
+					</div>
+				)}
+				<div className="movie-info-group">
+					<h5 className="movie-info-heading">Avg. Rating:</h5>
+					<p>{vote_average}</p>
+				</div>
+				<div className="movie-info-group">
+					<h5 className="movie-info-heading"># of Votes:</h5>
+					<p>{vote_count}</p>
+				</div>
+				<div className="movie-info-group">
+					<h5 className="movie-info-heading">Release Date:</h5>
+					<p>{release_date}</p>
+				</div>
+				<div className="movie-info-group">
+					<h5 className="movie-info-heading">Runtime:</h5>
+					<p>{runtime} mins.</p>
+				</div>
+
 				{isClicked && (
 					<>
 						{crew.length !== 0 && (

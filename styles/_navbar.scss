@@ -47,7 +47,9 @@ button {
 
 .nav-logo-wrapper {
 	padding-left: 1rem;
-	flex: 1;
+	@include responsive(Tablet) {
+		flex: 1;
+	}
 }
 
 .nav-logo {
