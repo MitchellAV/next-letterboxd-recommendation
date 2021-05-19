@@ -48,7 +48,7 @@ const Navbar = () => {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link href={`/user/${username}/personal`}>
+							<Link href={`/user/${username}/films`}>
 								<a className="nav-link">Films</a>
 							</Link>
 						</li>

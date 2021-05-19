@@ -13,8 +13,8 @@ const useFetchMovies = (location, setIsLoading) => {
 		setIsLoading(true);
 		if (router.isReady) {
 			try {
-				const { slug, ...filter } = router.query;
-				console.log(filter);
+				const { slug, ...query } = router.query;
+				console.log(query);
 				let URI = "";
 				switch (location) {
 					case "user":
@@ -30,7 +30,7 @@ const useFetchMovies = (location, setIsLoading) => {
 					default:
 						break;
 				}
-				const params = { params: filter, timeout: 1000 * 60 * 5 };
+				const params = { params: query, timeout: 1000 * 60 * 5 };
 				const res = await axios.get(URI, params);
 				const data = res.data;
 				console.log(data);

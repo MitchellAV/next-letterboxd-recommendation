@@ -4,6 +4,9 @@
 	gap: 1rem;
 	margin: 1rem 0;
 
+	@include orientation(landscape) {
+		grid-template-columns: repeat(2, 1fr);
+	}
 	@include responsive(HD) {
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -27,17 +30,19 @@
 
 .movie-thumb {
 	object-fit: contain;
-	max-height: 50vh;
 	max-width: 100%;
-	@include orientation(landscape) {
-		float: left;
-		margin-right: 1rem;
-	}
+
 	@include responsive(Tablet) {
+		max-height: 50vh;
 		max-width: 50%;
 		float: left;
 		margin-right: 1rem;
 		// margin-bottom: 1rem;
+		@include orientation(landscape) {
+			float: left;
+			margin-right: 1rem;
+			max-height: 70vh;
+		}
 	}
 }
 
@@ -65,7 +70,6 @@
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	margin-bottom: 0.5rem;
 	font-size: ms(1);
 	@include orientation(landscape) {
 		flex-direction: row;
@@ -76,8 +80,8 @@
 }
 .movie-link {
 	width: 100%;
-	margin: 0.2rem;
-	padding: 0.1rem 0.3rem;
+	margin: 0.2rem 0;
+	// padding: 0.1rem 0.3rem;
 	list-style-type: none;
 	background-color: $link-color;
 	color: $tag-text-color;

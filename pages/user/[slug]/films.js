@@ -6,7 +6,7 @@ import { useState } from "react";
 import { format_url } from "../../../util/route-functions";
 import Pagination from "../../../components/Pagination";
 
-const Personal = () => {
+const Films = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { movies, page, numPages } = useFetchMovies("personal", setIsLoading);
 	const router = useRouter();
@@ -44,4 +44,4 @@ const Personal = () => {
 	);
 };
 
-export default Personal;
+export default Films;

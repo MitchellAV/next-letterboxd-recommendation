@@ -104,7 +104,6 @@ const MovieFilter = () => {
 	return (
 		<form id="filter_search" onSubmit={handleSubmit}>
 			<fieldset className="form-items">
-				<h4>Filter</h4>
 				<div className="form-group">
 					<label htmlFor="filter">Tag</label>
 					<input
