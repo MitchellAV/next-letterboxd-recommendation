@@ -1,14 +1,12 @@
 import MovieFilter from "../../components/MovieFilter";
 import Pagination from "../../components/Pagination";
 import MovieDetails from "../../components/recommendations/MovieDetails";
-import useFetchMovies from "../../hooks/useFetchMovies";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { format_url } from "../../util/route-functions";
+import axios from "axios";
 
-const User = () => {
-	const [isLoading, setIsLoading] = useState(true);
-	const { movies, page, numPages } = useFetchMovies("user", setIsLoading);
+const User = ({ search }) => {
+	const { movies, page, numPages } = search;
 	const router = useRouter();
 	const url = format_url(router.asPath);
 
@@ -16,32 +14,34 @@ const User = () => {
 		<>
 			<MovieFilter />
 			<Pagination currentPage={page} maxPage={numPages} url={url} />
-			{isLoading ? (
-				<div className="loading">
-					<i className=" fa fa-spinner fa-spin fa-3x fa-fw"></i>
-					<h2>Loading Movies...</h2>
-				</div>
-			) : (
-				<>
-					<section className="movie-list">
-						{movies.length !== 0 &&
-							movies.map((movie) => (
-								<MovieDetails
-									movie={movie}
-									key={movie._id}
-									url={url}
-								/>
-							))}
-					</section>
-					<Pagination
-						currentPage={page}
-						maxPage={numPages}
-						url={url}
-					/>
-				</>
-			)}
+
+			<section className="movie-list">
+				{movies.length !== 0 &&
+					movies.map((movie) => (
+						<MovieDetails movie={movie} key={movie._id} url={url} />
+					))}
+			</section>
+			<Pagination currentPage={page} maxPage={numPages} url={url} />
 		</>
 	);
 };
 
 export default User;
+
+export async function getServerSideProps(context) {
+	const { query } = context;
+	const { slug, ...rest } = query;
+	let URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${slug}`;
+
+	const options = { params: rest, timeout: 1000 * 60 * 5 };
+	const res = await axios.get(URI, options);
+	const data = res.data;
+
+	if (!data) {
+		return {
+			notFound: true
+		};
+	}
+
+	return { props: { search: data } };
+}
