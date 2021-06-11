@@ -2,25 +2,25 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { format_url, format_query } from "../util/route-functions";
 
-const MovieFilter = () => {
+const MovieFilter = ({ filterParams }) => {
 	const router = useRouter();
-	// const {
-	// 	min_vote_average,
-	// 	filter,
-	// 	min_vote_count,
-	// 	min_runtime,
-	// 	num_per_page,
-	// 	sort_type,
-	// 	order
-	// } = filterParams;
+	const {
+		min_vote_average,
+		filter,
+		min_vote_count,
+		min_runtime,
+		num_per_page,
+		sort_type,
+		order
+	} = filterParams;
 	const defaultFormState = {
-		filter: { value: "", valid: true },
-		min_vote_count: { value: 1000, valid: true },
-		min_vote_average: { value: 7, valid: true },
-		min_runtime: { value: 40, valid: true },
-		num_per_page: { value: 30, valid: true },
-		sort_type: { value: "recommended", valid: true },
-		order: { value: -1, valid: true }
+		filter: { value: filter, valid: true },
+		min_vote_count: { value: min_vote_count, valid: true },
+		min_vote_average: { value: min_vote_average, valid: true },
+		min_runtime: { value: min_runtime, valid: true },
+		num_per_page: { value: num_per_page, valid: true },
+		sort_type: { value: sort_type, valid: true },
+		order: { value: order, valid: true }
 	};
 	const [formState, setFormState] = useState(defaultFormState);
 	// const [response, setResponse] = useState({ msg: "", errors: [] });
@@ -199,7 +199,7 @@ const MovieFilter = () => {
 						<option value={120}>120</option>
 					</select>
 				</div>
-				<button className=" filter-btn" type="submit">
+				<button className="btn filter-btn" type="submit">
 					Filter
 				</button>
 			</fieldset>

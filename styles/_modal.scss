@@ -1,0 +1,18 @@
+.modal-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: min(100%, 75ch);
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 10px;
+}
+.modal-success {
+	color: $text-color;
+	background-color: $navbar-color;
+}
+.modal-fail {
+	color: $text-color;
+	background-color: $bright-color;
+}

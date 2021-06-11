@@ -1,18 +1,18 @@
 import MovieFilter from "../../../components/MovieFilter";
-import MovieDetails from "../../../components/recommendations/MovieDetails";
+import MovieDetails from "../../../components/MovieDetails";
 import { useRouter } from "next/router";
 import { format_url } from "../../../util/route-functions";
 import Pagination from "../../../components/Pagination";
 import axios from "axios";
 
 const Films = ({ search }) => {
-	const { movies, page, numPages } = search;
+	const { movies, page, numPages, filterParams } = search;
 	const router = useRouter();
 	const url = format_url(router.asPath);
 
 	return (
 		<>
-			<MovieFilter />
+			<MovieFilter filterParams={filterParams} />
 			<Pagination currentPage={page} maxPage={numPages} url={url} />
 
 			<>

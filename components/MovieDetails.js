@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const MovieDetials = ({ movie, url }) => {
+const MovieDetails = ({ movie, url }) => {
 	const [isClicked, setIsClicked] = useState(false);
 	const {
 		_id,
@@ -21,14 +21,10 @@ const MovieDetials = ({ movie, url }) => {
 		userRating,
 		score
 	} = movie;
-	console.log(score);
 	return (
-		<article
-			className="movie-container"
-			onClick={() => setIsClicked(!isClicked)}
-		>
+		<article className="movie-container">
 			<h2 className="movie-title">{title}</h2>
-			<div className="movie-info">
+			<div className="movie-info" onClick={() => setIsClicked(false)}>
 				<a
 					className="movie-link"
 					target="_blank"
@@ -230,12 +226,22 @@ const MovieDetials = ({ movie, url }) => {
 			</div>
 
 			{isClicked ? (
-				<h5 className="info-button btn">Click for less info</h5>
+				<h5
+					className="btn info-btn"
+					onClick={() => setIsClicked(!isClicked)}
+				>
+					Click for less info
+				</h5>
 			) : (
-				<h5 className="info-button btn">Click for more info</h5>
+				<h5
+					className="btn info-btn"
+					onClick={() => setIsClicked(!isClicked)}
+				>
+					Click for more info
+				</h5>
 			)}
 		</article>
 	);
 };
 
-export default MovieDetials;
+export default MovieDetails;

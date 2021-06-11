@@ -1,4 +1,4 @@
-import MovieDetails from "../../components/recommendations/MovieDetails";
+import MovieDetails from "../../components/MovieDetails";
 import Pagination from "../../components/Pagination";
 import { useRouter } from "next/router";
 import { format_url } from "../../util/route-functions";

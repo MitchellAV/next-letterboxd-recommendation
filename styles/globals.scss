@@ -6,7 +6,9 @@
 @import "navbar";
 @import "movie-list";
 @import "pagination";
+@import "modal";
 @import "footer";
+@import "form";
 
 .status-container {
 	width: 100%;
@@ -52,12 +54,11 @@
 
 	border: none;
 	color: white;
-	padding: 15px 32px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 16px;
-	width: 100%;
+	font-size: ms(0);
+	border-radius: 10px;
 }
 
 .filter-btn {
@@ -69,52 +70,21 @@
 	display: inline-block;
 	font-size: 1rem;
 	background-color: #00b020;
-	border-radius: 10px;
+}
+
+.submit-btn {
+	background-color: #00b020;
+	padding: 1rem 2rem;
+	font-size: ms(2);
+}
+
+.info-btn {
+	padding: 0.6rem 1rem;
+	width: 100%;
 }
 
 .searchterm {
 	text-align: left;
 	margin: 1rem;
 	padding-left: 5rem;
-}
-
-fieldset {
-	border: none;
-}
-
-#filter_search {
-	background: #2c3440;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-
-	padding: 0.5rem;
-}
-
-#filter_search input,
-select,
-option {
-	max-width: 200px;
-	border-radius: 10px;
-	padding: 0.2rem 0.5rem;
-	text-align: left;
-	font-size: 1rem;
-	color: black;
-	border: none;
-	flex: 1 1;
-}
-
-.form-items {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	align-items: center;
-	flex-wrap: wrap;
-}
-.form-group {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin: 0.5rem;
-	/* min-width: 150px; */
 }
