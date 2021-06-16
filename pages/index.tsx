@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ import axios from "axios";
 import Status from "../components/Status";
 import Modal from "../components/Modal";
 
-export default function Home() {
+const Home = () => {
 	const router = useRouter();
 	const [form, setForm] = useState({ username: "", accuracy: "low" });
 	const [isLoading, setIsLoading] = useState(false);
@@ -17,13 +17,12 @@ export default function Home() {
 		message: "",
 		status: -1
 	});
-	const handleChange = (e) => {
+	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		let value = e.target.value;
 		let name = e.target.name;
 		setForm({ ...form, [name]: value });
-		console.log(form);
 	};
-	const handleSubmit = async (e) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
 		setUserMovieStatus("waiting");
@@ -44,10 +43,11 @@ export default function Home() {
 			setResponse(data);
 		} catch (err) {
 			setUserMovieStatus("failed");
-			console.log(err.response.data);
-			setResponse(err.response.data);
-
-			return;
+			try {
+				setResponse(err.response.data);
+			} finally {
+				return;
+			}
 		}
 		try {
 			setUserRecStatus("working");
@@ -65,9 +65,12 @@ export default function Home() {
 			setResponse(data);
 		} catch (err) {
 			setUserRecStatus("failed");
-			setResponse(err.response.data);
 			console.log(err);
-			return;
+			try {
+				setResponse(err.response.data);
+			} finally {
+				return;
+			}
 		}
 		setTimeout(() => {
 			router.push(`/user/${form.username}`);
@@ -84,7 +87,7 @@ export default function Home() {
 				Find personalized movie recommendations based on your Letterboxd
 				profile
 			</h2>
-			<form class="recommendation-form" onSubmit={handleSubmit}>
+			<form className="recommendation-form" onSubmit={handleSubmit}>
 				<fieldset className="form-items recommendation-items">
 					<div className="form-group">
 						<label htmlFor="username" className="form-label">
@@ -109,7 +112,7 @@ export default function Home() {
 								id="low"
 								name="accuracy"
 								value="low"
-								defaultChecked="true"
+								defaultChecked={true}
 								className="form-radio"
 							/>
 							<label htmlFor="low" className="form-label">
@@ -172,4 +175,6 @@ export default function Home() {
 			)}
 		</>
 	);
-}
+};
+
+export default Home;

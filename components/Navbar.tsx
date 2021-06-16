@@ -4,17 +4,17 @@ import { useState } from "react";
 
 const Navbar = () => {
 	const router = useRouter();
-	let username = "";
+	let username: string | undefined;
 	if (router.route.includes("user") && router.isReady) {
 		const { slug } = router.query;
-		username = slug;
+		username = slug as string;
 	}
 	const [search, setSearch] = useState("");
 
-	const handleChange = (e) => {
+	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setSearch(e.target.value);
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 		router.push(`/user/${search}`);
 		setSearch("");

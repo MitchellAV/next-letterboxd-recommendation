@@ -5,7 +5,18 @@ import { useRouter } from "next/router";
 import { format_url } from "../../util/route-functions";
 import axios from "axios";
 
-const User = ({ search }) => {
+import { GetServerSideProps } from "next";
+import { FilterParams } from "../../types";
+interface UserProps {
+	search: {
+		movies: any[];
+		page: number;
+		numPages: number;
+		filterParams: FilterParams;
+	};
+}
+
+const User = ({ search }: UserProps) => {
 	const { movies, page, numPages, filterParams } = search;
 	const router = useRouter();
 	const url = format_url(router.asPath);
@@ -13,7 +24,7 @@ const User = ({ search }) => {
 	return (
 		<>
 			<MovieFilter filterParams={filterParams} />
-			<Pagination currentPage={page} maxPage={numPages} url={url} />
+			<Pagination currentPage={page} maxPage={numPages} />
 
 			<section className="movie-list">
 				{movies.length !== 0 &&
@@ -21,17 +32,17 @@ const User = ({ search }) => {
 						<MovieDetails movie={movie} key={movie._id} url={url} />
 					))}
 			</section>
-			<Pagination currentPage={page} maxPage={numPages} url={url} />
+			<Pagination currentPage={page} maxPage={numPages} />
 		</>
 	);
 };
 
 export default User;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { query } = context;
 	const { slug, ...rest } = query;
-	let URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${slug}`;
+	const URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/user/${slug}`;
 
 	const options = { params: rest, timeout: 1000 * 60 * 5 };
 	const res = await axios.get(URI, options);
@@ -44,4 +55,4 @@ export async function getServerSideProps(context) {
 	}
 
 	return { props: { search: data } };
-}
+};

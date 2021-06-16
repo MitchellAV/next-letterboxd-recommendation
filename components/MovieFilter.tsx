@@ -1,8 +1,12 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { format_url, format_query } from "../util/route-functions";
+import { format_url } from "../util/route-functions";
+import { FilterParams } from "../types";
+export interface MovieFilterProps {
+	filterParams: FilterParams;
+}
 
-const MovieFilter = ({ filterParams }) => {
+const MovieFilter = ({ filterParams }: MovieFilterProps) => {
 	const router = useRouter();
 	const {
 		min_vote_average,
@@ -14,95 +18,41 @@ const MovieFilter = ({ filterParams }) => {
 		order
 	} = filterParams;
 	const defaultFormState = {
-		filter: { value: filter, valid: true },
-		min_vote_count: { value: min_vote_count, valid: true },
-		min_vote_average: { value: min_vote_average, valid: true },
-		min_runtime: { value: min_runtime, valid: true },
-		num_per_page: { value: num_per_page, valid: true },
-		sort_type: { value: sort_type, valid: true },
-		order: { value: order, valid: true }
+		filter: filter,
+		min_vote_count: min_vote_count,
+		min_vote_average: min_vote_average,
+		min_runtime: min_runtime,
+		num_per_page: num_per_page,
+		sort_type: sort_type,
+		order: order
 	};
 	const [formState, setFormState] = useState(defaultFormState);
-	// const [response, setResponse] = useState({ msg: "", errors: [] });
-	const handleChange = (e, v) => {
+	const formRef = useRef<HTMLFormElement>(null!);
+
+	const handleChange: React.ChangeEventHandler<
+		HTMLInputElement | HTMLSelectElement
+	> = (e) => {
 		const formEl = e.target;
 		const name = formEl.name;
 		const value = formEl.value;
-		let valid = false;
-		switch (name) {
-			// case "min_vote_count":
-			// 	formEl.setCustomValidity("");
-			// 	if (value >= 1) valid = true;
-			// 	valid
-			// 		? formEl.setCustomValidity("")
-			// 		: formEl.setCustomValidity("Must have atleast 1 vote");
-			// 	break;
-
-			default:
-				valid = true;
-				break;
-		}
 
 		setFormState({
 			...formState,
-			[name]: { value, valid }
+			[name]: value
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 		const url = format_url(router.asPath);
-		const query = format_query(formState);
+		console.log(this);
 
-		// let validForm =
-		// 	formState.name.valid &&
-		// 	formState.email.valid &&
-		// 	formState.subject.valid &&
-		// 	formState.message.valid;
-
-		if (e.target.checkValidity()) {
-			router.push({ pathname: url, query });
+		if (formRef.current.checkValidity()) {
+			router.push({ pathname: url, query: formState });
 		}
-		// 	try {
-		// 		let form_data = {
-		// 			name: formState.name.value,
-		// 			email: formState.email.value,
-		// 			subject: formState.subject.value,
-		// 			message: formState.message.value
-		// 		};
-		// 		axios
-		// 			.post("/api/contact/sendEmail", form_data)
-		// 			.then((res) => {
-		// 				setFormState(defaultFormState);
-		// 				setResponse({
-		// 					msg: res.data.msg,
-		// 					errors: []
-		// 				});
-		// 			})
-		// 			.catch((err) => {
-		// 				console.log(err.response);
-		// 				const error_msg = err.response.data.msg;
-		// 				const errors = err.response.data.errors;
-		// 				let error_list = [];
-		// 				if (errors.length !== 0) {
-		// 					errors.forEach((error) => {
-		// 						error_list.push(error);
-		// 					});
-		// 				}
-		// 				setResponse({ msg: error_msg, errors: error_list });
-		// 			});
-		// 	} catch (err) {
-		// 		console.error(err);
-		// 		setResponse({
-		// 			msg:
-		// 				"There was an error sending the form. Please make sure you are connected to the internet or contact me directly at mitchellvictoriano@gmail.com",
-		// 			errors: []
-		// 		});
-		// 	}
-		// }
 	};
 	return (
-		<form id="filter_search" onSubmit={handleSubmit}>
+		<form id="filter_search" ref={formRef} onSubmit={handleSubmit}>
 			<fieldset className="form-items">
 				<div className="form-group">
 					<label htmlFor="filter">Tag</label>
@@ -112,7 +62,7 @@ const MovieFilter = ({ filterParams }) => {
 						name="filter"
 						autoComplete="off"
 						placeholder='e.g. "coming of age"'
-						value={formState.filter.value}
+						value={formState.filter}
 						onChange={handleChange}
 					/>
 				</div>
@@ -120,7 +70,7 @@ const MovieFilter = ({ filterParams }) => {
 					<label htmlFor="sort_type">Sort by</label>
 					<select
 						name="sort_type"
-						value={formState.sort_type.value}
+						value={formState.sort_type}
 						onChange={handleChange}
 					>
 						<option value="recommended">Recommended</option>
@@ -145,7 +95,7 @@ const MovieFilter = ({ filterParams }) => {
 						placeholder={"0.5 to 10"}
 						min={0.5}
 						max={10}
-						value={formState.min_vote_average.value}
+						value={formState.min_vote_average}
 						onChange={handleChange}
 					/>
 				</div>
@@ -156,9 +106,9 @@ const MovieFilter = ({ filterParams }) => {
 						id="min_vote_count"
 						name="min_vote_count"
 						autoComplete="off"
-						// placeholder={"defaultFormState.min_vote_count.value"}
+						// placeholder={"defaultFormState.min_vote_count"}
 						min={1}
-						value={formState.min_vote_count.value}
+						value={formState.min_vote_count}
 						onChange={handleChange}
 					/>
 				</div>
@@ -171,7 +121,7 @@ const MovieFilter = ({ filterParams }) => {
 						autoComplete="off"
 						placeholder={"In Minutes"}
 						min={1}
-						value={formState.min_runtime.value}
+						value={formState.min_runtime}
 						onChange={handleChange}
 					/>
 				</div>
@@ -179,7 +129,7 @@ const MovieFilter = ({ filterParams }) => {
 					<label htmlFor="order">Order</label>
 					<select
 						name="order"
-						value={formState.order.value}
+						value={formState.order}
 						onChange={handleChange}
 					>
 						<option value={-1}>Descending</option>
@@ -190,7 +140,7 @@ const MovieFilter = ({ filterParams }) => {
 					<label htmlFor="num_per_page">Results per Page</label>
 					<select
 						name="num_per_page"
-						value={formState.num_per_page.value}
+						value={formState.num_per_page}
 						onChange={handleChange}
 					>
 						<option value={30}>30</option>

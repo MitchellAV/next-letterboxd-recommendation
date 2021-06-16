@@ -2,9 +2,19 @@ import MovieDetails from "../../components/MovieDetails";
 import Pagination from "../../components/Pagination";
 import { useRouter } from "next/router";
 import { format_url } from "../../util/route-functions";
+import { GetServerSideProps } from "next";
 import axios from "axios";
 
-const Movie = ({ search }) => {
+interface MovieProps {
+	search: {
+		movies: any[];
+		page: number;
+		numPages: number;
+		target_movie: string;
+	};
+}
+
+const Movie = ({ search }: MovieProps) => {
 	const { movies, page, numPages, target_movie } = search;
 	const router = useRouter();
 	const url = format_url(router.asPath);
@@ -18,7 +28,7 @@ const Movie = ({ search }) => {
 				</span>
 			</h1>
 
-			<Pagination currentPage={page} maxPage={numPages} url={url} />
+			<Pagination currentPage={page} maxPage={numPages} />
 
 			<section className="movie-list">
 				{movies.length !== 0 &&
@@ -27,14 +37,14 @@ const Movie = ({ search }) => {
 					))}
 			</section>
 
-			<Pagination currentPage={page} maxPage={numPages} url={url} />
+			<Pagination currentPage={page} maxPage={numPages} />
 		</>
 	);
 };
 
 export default Movie;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { query } = context;
 	const { slug, ...rest } = query;
 	let URI = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/movie/${slug}`;
@@ -50,4 +60,4 @@ export async function getServerSideProps(context) {
 	}
 
 	return { props: { search: data } };
-}
+};

@@ -1,7 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
+import { Movie } from "../types";
 
-const MovieDetails = ({ movie, url }) => {
+interface MovieDetailsProps {
+	movie: Movie;
+	url: string;
+}
+
+const MovieDetails = ({ movie, url }: MovieDetailsProps) => {
 	const [isClicked, setIsClicked] = useState(false);
 	const {
 		_id,
