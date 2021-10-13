@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /user/
+Disallow: /movie/
+Disallow: /logos/
